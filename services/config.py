@@ -15,7 +15,20 @@ config: models.config.Config = {
 		"posters": {
 			"enabled": False,
 			"imgurClientID": "",
-			"useWeservProxy": False
+			"useWeservProxy": False,
+			"customHost": {
+				"enabled": False,
+				"api": "",
+				"field": "files[]",
+				"jsonKeys": {
+					"status": "success",
+					"description": "description",
+					"result": "files[0].url"
+				},
+				"headers": {
+					"token": "MY_AUTH_TOKEN"
+				}
+			}
 		},
 	},
 	"users": [],
