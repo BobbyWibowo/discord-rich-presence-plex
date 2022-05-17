@@ -207,6 +207,9 @@ class PlexAlertListener(threading.Thread):
 						self.logger.debug("Uploading image")
 						thumbUrl = uploadImage(self.server.url(thumb, True))
 						setKey(thumb, thumbUrl)
+					if thumbUrl and config["display"]["posters"]["useWeservProxy"]:
+						thumbUrl = thumbUrl.replace("https://", "")
+						thumbUrl = f"https://images.weserv.nl/?url={thumbUrl}&w=128&h=128&fit=cover"
 				activity: models.discord.Activity = {
 					"details": title[:128],
 					"state": stateText[:128],
