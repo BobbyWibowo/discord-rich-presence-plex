@@ -15,6 +15,7 @@ config: models.config.Config = {
 		"posters": {
 			"enabled": False,
 			"imgurClientID": "",
+			"useWeservProxy": False
 		},
 	},
 	"users": [],
