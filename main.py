@@ -45,9 +45,12 @@ plexAlertListeners: list[PlexAlertListener] = []
 try:
 	plexAlertListeners = [PlexAlertListener(user["token"], server) for user in config["users"] for server in user["servers"]]
 	while True:
-		userInput = input()
-		if userInput in ["exit", "quit"]:
-			raise KeyboardInterrupt
+		if os.environ.get('NO_KEYBOARD_INPUT'):
+			time.sleep(1)
+		else:
+			userInput = input()
+			if userInput in ["exit", "quit"]:
+				raise KeyboardInterrupt
 except KeyboardInterrupt:
 	for plexAlertListener in plexAlertListeners:
 		plexAlertListener.disconnect()
