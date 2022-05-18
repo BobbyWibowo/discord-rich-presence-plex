@@ -209,7 +209,9 @@ class PlexAlertListener(threading.Thread):
 						setKey(thumb, thumbUrl)
 					if thumbUrl and config["display"]["posters"]["useWeservProxy"]:
 						thumbUrl = thumbUrl.replace("https://", "")
-						thumbUrl = f"https://images.weserv.nl/?url={thumbUrl}&w=128&h=128&fit=cover"
+						thumbUrl = f"https://images.weserv.nl/?url={thumbUrl}"
+						if config["display"]["posters"]["weservOptions"]:
+							thumbUrl += config["display"]["posters"]["weservOptions"]
 				activity: models.discord.Activity = {
 					"details": title[:128],
 					"state": stateText[:128],

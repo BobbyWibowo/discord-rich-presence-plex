@@ -16,6 +16,7 @@ config: models.config.Config = {
 			"enabled": False,
 			"imgurClientID": "",
 			"useWeservProxy": False,
+			"weservOptions": "&w=640&h=640&fit=cover",
 			"customHost": {
 				"enabled": False,
 				"api": "",
