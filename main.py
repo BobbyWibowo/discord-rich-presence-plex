@@ -48,7 +48,7 @@ try:
 			logger.info("Authentication failed.")
 			exit()
 	plexAlertListeners = [PlexAlertListener(user["token"], server) for user in config["users"] for server in user["servers"]]
-	if sys.stdin:
+	if sys.stdin and not os.environ.get('NO_KEYBOARD_INPUT'):
 		while True:
 			userInput = input()
 			if userInput in ["exit", "quit"]:
