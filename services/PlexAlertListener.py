@@ -1,4 +1,4 @@
-# pyright: reportTypedDictNotRequiredAccess=none
+# pyright: reportTypedDictNotRequiredAccess=none,reportUnknownArgumentType=none,reportUnknownMemberType=none
 
 from .DiscordRpcService import DiscordRpcService
 from .cache import getKey, setKey
@@ -44,8 +44,9 @@ class PlexAlertListener(threading.Thread):
 		connected = False
 		while not connected:
 			try:
+				self.logger.info("Signing into Plex")
 				self.account = MyPlexAccount(token = self.token)
-				self.logger.info("Signed in as Plex User \"%s\"", self.account.username)
+				self.logger.info("Signed in as Plex user \"%s\"", self.account.username)
 				self.listenForUser = self.serverConfig.get("listenForUser", self.account.username)
 				self.server = None
 				for resource in self.account.resources():
@@ -175,7 +176,9 @@ class PlexAlertListener(threading.Thread):
 				self.updateTimeoutTimer = threading.Timer(self.updateTimeoutTimerInterval, self.updateTimeout)
 				self.updateTimeoutTimer.start()
 				self.lastState, self.lastSessionKey, self.lastRatingKey = state, sessionKey, ratingKey
-				mediaType = item.type
+				mediaType: str = item.type
+				title: str
+				thumb: str
 				if mediaType in ["movie", "episode"]:
 					stateStrings: list[str] = [formatSeconds(item.duration / 1000)]
 					if mediaType == "movie":
@@ -201,7 +204,7 @@ class PlexAlertListener(threading.Thread):
 					self.logger.debug("Unsupported media type \"%s\", ignoring", mediaType)
 					return
 				thumbUrl = ""
-				if config["display"]["posters"]["enabled"]:
+				if thumb and config["display"]["posters"]["enabled"]:
 					thumbUrl = getKey(thumb)
 					if not thumbUrl:
 						self.logger.debug("Uploading image")
